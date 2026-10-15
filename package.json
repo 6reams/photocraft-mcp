@@ -1,0 +1,53 @@
+{
+  "name": "photocraft-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for PhotoCraft: let Claude, Cursor or any MCP client open, edit and export images in PhotoCraft.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "photocraft-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "photocraft",
+    "image-editing",
+    "claude",
+    "cursor",
+    "ai"
+  ],
+  "author": "6reams",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/6reams/photocraft-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/6reams/photocraft-mcp/issues"
+  },
+  "homepage": "https://github.com/6reams/photocraft-mcp#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "win32"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.9.3"
+  }
+}

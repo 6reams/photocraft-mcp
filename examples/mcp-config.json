@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "photocraft": {
+      "command": "node",
+      "args": ["C:/path/to/photocraft-mcp/dist/index.js"],
+      "env": {
+        "LOG_LEVEL": "1"
+      }
+    }
+  }
+}
