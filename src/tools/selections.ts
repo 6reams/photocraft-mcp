@@ -1,6 +1,6 @@
 import { ToolDefinition } from './shared.js';
 import { PhotoCraftConnection } from '../photocraft/connection.js';
-import { safeRun, pcSuccess, normalizeDocState } from './shared.js';
+import { safeRun, pcSuccess, pcError, normalizeDocState } from './shared.js';
 
 export function createPhotoCraftSelectionTools(pc: PhotoCraftConnection): ToolDefinition[] {
   return [
@@ -60,12 +60,15 @@ export function createPhotoCraftSelectionTools(pc: PhotoCraftConnection): ToolDe
       },
       handler: async (args) =>
         safeRun(async () => {
-          const result = await pc.runCommand('select.rect', {
-            left: args.left as number,
-            top: args.top as number,
-            right: args.right as number,
-            bottom: args.bottom as number,
-          });
+          const left = args.left as number;
+          const top = args.top as number;
+          const width = (args.right as number) - left;
+          const height = (args.bottom as number) - top;
+          if (!(width > 0 && height > 0)) {
+            return pcError('right must be greater than left and bottom greater than top', 'invalid_param');
+          }
+          // The engine takes origin + size, not edges.
+          const result = await pc.runCommand('select.rect', { x: left, y: top, width, height });
           return pcSuccess({ ok: true, ...normalizeDocState(result) }, 'Rectangular selection created.');
         }),
     },

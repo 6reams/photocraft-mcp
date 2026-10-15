@@ -50,6 +50,7 @@ export function createPhotoCraftStateTools(pc: PhotoCraftConnection): ToolDefini
       },
       handler: async () =>
         safeRun(async () => {
+          await pc.ensureReady();
           const result = await pc.client.call('engine.commands', {});
           return pcSuccess({ ok: true, engine: 'photocraft', commands: result });
         }),
