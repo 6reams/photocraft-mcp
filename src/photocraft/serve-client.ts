@@ -4,7 +4,6 @@ import { homedir } from 'os';
 import { isAbsolute, relative, resolve as resolvePath } from 'path';
 import { Logger } from '../logger.js';
 
-const PHOTOCRAFT_CLI = 'C:\\Program Files\\PhotoCraft\\photocraft-cli.exe';
 const REQUEST_TIMEOUT_MS = 30_000;
 // photocraft-cli serve only touches files under explicitly granted roots, and only
 // accepts paths relative to them. Default to the user's home directory.
@@ -46,6 +45,9 @@ export class PhotoCraftServeClient {
   private ready = false;
   private startPromise: Promise<void> | null = null;
 
+  /** @param cliPath Full path to photocraft-cli.exe, as resolved by PhotoCraftDetector. */
+  constructor(private readonly cliPath: string) {}
+
   async ensureStarted(): Promise<void> {
     if (this.ready) return;
     if (this.startPromise) return this.startPromise;
@@ -55,8 +57,8 @@ export class PhotoCraftServeClient {
 
   private start(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.logger.info('Starting photocraft-cli serve…');
-      this.proc = spawn(PHOTOCRAFT_CLI, [
+      this.logger.info(`Starting photocraft-cli serve (${this.cliPath})…`);
+      this.proc = spawn(this.cliPath, [
         'serve',
         '--automation-read-root', FS_ROOT,
         '--automation-write-root', FS_ROOT,
