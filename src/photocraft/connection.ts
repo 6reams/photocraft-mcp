@@ -32,7 +32,7 @@ export class PhotoCraftConnection {
     const info = await this.detect();
     if (!info) throw new Error('PhotoCraft is not installed on this system');
     if (!this._client) {
-      this._client = new PhotoCraftServeClient();
+      this._client = new PhotoCraftServeClient(info.cliPath);
     }
     await this._client.ensureStarted();
   }
